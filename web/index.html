@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GenesisL1 Public API Registry</title>
+<meta name="description" content="A measured, independently attested register of public GenesisL1 EVM, Cosmos, CometBFT and gRPC endpoints. Copy an endpoint and check its record.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="GenesisL1 Public API Registry">
+<meta property="og:description" content="Community-operated GenesisL1 endpoints, with an uptime record you can verify yourself.">
+<meta property="og:type" content="website">
+<link rel="preload" href="vendor/fonts/archivo-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="shell nav">
+    <a class="brand" href="https://genesisl1.com">
+      <span class="brand-mark" aria-hidden="true">G</span>
+      <span><strong>GenesisL1</strong><small>PUBLIC API REGISTER</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#directory">Register</a>
+      <a href="#method">Method</a>
+      <a href="https://genesisl1.com/gov.html">Governance</a>
+    </nav>
+    <button id="themeBtn" class="icon-btn" type="button" title="Switch between light and dark" aria-label="Switch between light and dark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button id="connectBtn" class="btn" type="button">Connect wallet</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div>
+        <div class="eyebrow">Permissionless register · independently measured</div>
+        <h1>Public GenesisL1<br>endpoints, on the record.</h1>
+        <p class="lead">
+          Community-operated APIs for the GenesisL1 chain. Every endpoint here carries a
+          measurement history taken by independent checkers, and a reliability verdict that
+          no single party can write on its own. Copy one, or register your own infrastructure.
+        </p>
+        <div class="actions">
+          <button id="openRegister" class="btn solid" type="button">Register infrastructure</button>
+          <a class="btn ghost" href="#directory">Browse the register</a>
+        </div>
+      </div>
+
+      <div class="readout" aria-labelledby="readoutTitle">
+        <div class="readout-head">
+          <b id="readoutTitle">Network, last 24 hours</b>
+          <span class="eyebrow" id="readoutStamp">—</span>
+        </div>
+        <div class="readout-trace">
+          <div class="trace tall" id="networkTrace" role="img" aria-label="Hourly availability across every registered endpoint for the last 24 hours"></div>
+          <div class="trace-axis"><span>24h ago</span><span>12h</span><span>now</span></div>
+        </div>
+        <div class="readout-figures">
+          <div><b id="countInstances">—</b><span>instances</span></div>
+          <div><b id="countEndpoints">—</b><span>endpoints</span></div>
+          <div><b id="countHealthy">—</b><span>at target</span></div>
+          <div><b id="countFeeds">—</b><span>verified feeds</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="directory" class="section">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Live register</div>
+          <h2>Infrastructure instances</h2>
+        </div>
+        <button id="refreshBtn" class="btn ghost" type="button">Refresh</button>
+      </div>
+
+      <div class="filters">
+        <label class="visually-hidden" for="search">Search the register</label>
+        <input id="search" type="search" placeholder="Search name, operator, region or URL" autocomplete="off">
+        <label class="visually-hidden" for="typeFilter">Filter by API type</label>
+        <select id="typeFilter"><option value="">All API types</option></select>
+        <label class="visually-hidden" for="healthFilter">Filter by state</label>
+        <select id="healthFilter">
+          <option value="">All states</option>
+          <option value="ok">At target</option>
+          <option value="warn">Below target</option>
+          <option value="down">Flagged unreliable</option>
+          <option value="idle">Awaiting measurement</option>
+        </select>
+        <label class="visually-hidden" for="sortBy">Sort</label>
+        <select id="sortBy">
+          <option value="uptime">Best uptime first</option>
+          <option value="latency">Lowest latency first</option>
+          <option value="newest">Newest first</option>
+          <option value="name">By name</option>
+        </select>
+      </div>
+
+      <div id="notice" class="notice hidden" role="status"></div>
+      <div id="register" class="register" aria-live="polite">
+        <div class="empty">Reading the register from GenesisL1…</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="method" class="section pale">
+    <div class="shell method-grid">
+      <div>
+        <div class="eyebrow">How the numbers get here</div>
+        <h2>Measured off-chain.<br>Attested on-chain.</h2>
+      </div>
+      <div class="method-cols">
+        <div>
+          <span class="eyebrow">What is measured</span>
+          <h4>Real protocol calls</h4>
+          <p>Checkers make actual calls — a chain ID, a block height, a WebSocket round trip, an HTTP/2 handshake — not a bare TCP connect. A node that answers but stopped importing blocks is recorded as failing.</p>
+        </div>
+        <div>
+          <span class="eyebrow">What reaches the chain</span>
+          <h4>Only adverse days</h4>
+          <p>Minute-level history stays in each checker's local database. The chain stores registry records and a compact daily attestation, written only when an endpoint misses its target or recovers from a flag.</p>
+        </div>
+        <div>
+          <span class="eyebrow">Why you can trust it</span>
+          <h4>Quorum and signatures</h4>
+          <p>No single checker can flag an endpoint; a quorum of independently authorized checkers is required, and clearing a flag needs the same. Every telemetry feed this page reads is signature-checked against the on-chain checker roster before a number is shown.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell foot">
+    <span>GenesisL1 · public scientific infrastructure</span>
+    <span id="footMeta">—</span>
+  </div>
+</footer>
+
+<!-- register instance -->
+<div id="registerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle" aria-hidden="true">
+  <div class="modal-card">
+    <button class="close" type="button" data-close aria-label="Close">×</button>
+    <div class="eyebrow">On-chain registration</div>
+    <h2 id="registerTitle">Register infrastructure</h2>
+    <p class="muted">
+      Each address may hold four active instances of up to 24 endpoints. URLs, timestamps and
+      the owning address are public. Adding or changing an endpoint costs the registry fee.
+    </p>
+    <form id="registerForm" novalidate>
+      <div class="form-grid">
+        <label>Name<input name="name" maxlength="96" required placeholder="Northern Europe node"></label>
+        <label>Region<input name="region" maxlength="96" placeholder="Tallinn, EE"></label>
+        <label class="wide">Operator page or contact<input name="operatorInfo" maxlength="256" placeholder="https://operator.example"></label>
+      </div>
+      <div class="form-head">
+        <b>Endpoints</b>
+        <button type="button" id="addEndpointRow" class="text-btn">+ Add endpoint</button>
+      </div>
+      <div id="endpointRows"></div>
+      <div class="form-submit">
+        <span class="fee">Total <b id="registerFee">—</b></span>
+        <button class="btn solid" type="submit">Register on GenesisL1</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- add endpoints to an existing instance -->
+<div id="addModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="addTitle" aria-hidden="true">
+  <div class="modal-card">
+    <button class="close" type="button" data-close aria-label="Close">×</button>
+    <div class="eyebrow">Owner action</div>
+    <h2 id="addTitle">Add endpoints</h2>
+    <p class="muted">New endpoints join this instance and begin measurement immediately.</p>
+    <form id="addForm" novalidate>
+      <input type="hidden" id="addInstanceId">
+      <div class="form-head">
+        <b>New endpoints</b>
+        <button type="button" id="addMoreRow" class="text-btn">+ Add another</button>
+      </div>
+      <div id="addRows"></div>
+      <div class="form-submit">
+        <span class="fee">Total <b id="addFee">—</b></span>
+        <button class="btn solid" type="submit">Add endpoints</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- edit endpoint -->
+<div id="editModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="editTitle" aria-hidden="true">
+  <div class="modal-card narrow">
+    <button class="close" type="button" data-close aria-label="Close">×</button>
+    <div class="eyebrow">Owner action</div>
+    <h2 id="editTitle">Edit endpoint</h2>
+    <p class="muted">
+      The original registration date is kept. Changing the URL or the API type starts a fresh
+      measurement epoch and clears any current reliability flag; the endpoint's lifetime record
+      of flagged days is kept either way.
+    </p>
+    <form id="editForm" novalidate>
+      <input type="hidden" id="editId">
+      <label>API type<select id="editKind"></select></label>
+      <label style="margin-top:13px">Endpoint URL<input id="editUrl" maxlength="256" required></label>
+      <div class="form-submit">
+        <span class="fee">Fee <b id="editFee">—</b></span>
+        <button class="btn solid" type="submit">Save endpoint</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- edit instance details -->
+<div id="instanceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="instanceTitle" aria-hidden="true">
+  <div class="modal-card">
+    <button class="close" type="button" data-close aria-label="Close">×</button>
+    <div class="eyebrow">Owner action</div>
+    <h2 id="instanceTitle">Edit instance details</h2>
+    <p class="muted">Changing the name, region or operator link costs one endpoint fee. Endpoints are unaffected.</p>
+    <form id="instanceForm" novalidate>
+      <input type="hidden" id="instanceId">
+      <div class="form-grid">
+        <label>Name<input id="instanceName" maxlength="96" required></label>
+        <label>Region<input id="instanceRegion" maxlength="96"></label>
+        <label class="wide">Operator page or contact<input id="instanceInfo" maxlength="256"></label>
+      </div>
+      <div class="form-submit">
+        <span class="fee">Fee <b id="instanceFee">—</b></span>
+        <button class="btn solid" type="submit">Save details</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- contest a flag -->
+<div id="contestModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="contestTitle" aria-hidden="true">
+  <div class="modal-card narrow">
+    <button class="close" type="button" data-close aria-label="Close">×</button>
+    <div class="eyebrow">Owner action</div>
+    <h2 id="contestTitle">Contest this flag</h2>
+    <p class="muted">
+      Your statement is recorded on-chain against the endpoint and is public. It does not clear
+      the flag: that happens when a quorum of checkers measures the endpoint back at target.
+      This is free apart from gas.
+    </p>
+    <form id="contestForm" novalidate>
+      <input type="hidden" id="contestId">
+      <label>What happened<textarea id="contestReason" rows="3" maxlength="320" required placeholder="Upstream transit incident 2026-05-04, 11:20–12:05 UTC. Post-mortem at operator.example/incidents/12"></textarea></label>
+      <div class="form-submit">
+        <span class="fee">Gas only</span>
+        <button class="btn solid" type="submit">Record statement</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="vendor/ethers-6.13.4.umd.min.js"></script>
+<script src="vendor/abi.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+name: Measurement dispute
+description: An endpoint's reliability record looks wrong
+labels: [measurement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If you operate the endpoint, record your account on-chain first with
+        `contestEndpoint(endpointId, reason)`. It is free apart from gas, it is
+        public, and it is the record that follows the endpoint. This issue is
+        for the case where you believe the checkers or the contract behaved
+        incorrectly, not merely unfavourably.
+
+  - type: input
+    id: endpoint
+    attributes:
+      label: Endpoint id
+    validations: { required: true }
+
+  - type: textarea
+    id: claim
+    attributes:
+      label: What the record says, and what you believe is true
+    validations: { required: true }
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Independent evidence
+      description: Your own monitoring, an upstream incident report, transit graphs.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Already checked
+      options:
+        - label: The endpoint answers `eth_chainId` with the expected chain
+        - label: Its block height was advancing during the window
+        - label: It does not return a redirect
+        - label: It was not rate limiting the checkers

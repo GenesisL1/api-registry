@@ -1,0 +1,37 @@
+name: Bug report
+description: Something in the contract, checker or directory does not work
+labels: [bug]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options: [Contract, Checker, Directory (web), Deployment or docs, Not sure]
+    validations: { required: true }
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got instead.
+    validations: { required: true }
+
+  - type: input
+    id: deployment
+    attributes:
+      label: Registry address
+      description: Which deployment, if this is about a live one.
+      placeholder: "0x…"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or console output
+      description: Checker log lines, or the browser console. Redact any key material.
+      render: text
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: "v2.0.0, or a commit SHA"

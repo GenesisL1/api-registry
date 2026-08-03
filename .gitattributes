@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+# Bundled third-party code and generated artifacts should not skew language
+# statistics or clutter diffs.
+web/vendor/ethers-*.js       linguist-vendored
+web/vendor/fonts/*           linguist-vendored binary
+web/vendor/abi.js            linguist-generated
+contract/abi/*.json          linguist-generated
+contract/build/*             linguist-generated
+
+*.woff2 binary
+*.zip   binary

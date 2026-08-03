@@ -1,0 +1,607 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "registry_",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidInput",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "cursor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAllEndpoints",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "id",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "instanceId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "addedAt",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "updatedAt",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "epoch",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "adverseDayCount",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lastAdverseDay",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kind",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "unreliable",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "verified",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "fingerprint",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "string",
+            "name": "url",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IGenesisL1APIRegistry.Endpoint[]",
+        "name": "endpoints",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "owners",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nextCursor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint64",
+        "name": "atRevision",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCheckers",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "authorized",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint32",
+            "name": "reportCount",
+            "type": "uint32"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "telemetryUrl",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct GenesisL1RegistryLens.CheckerView[]",
+        "name": "values",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "cursor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "name": "getDirectory",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint64",
+                "name": "id",
+                "type": "uint64"
+              },
+              {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+              },
+              {
+                "internalType": "uint64",
+                "name": "addedAt",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "updatedAt",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint16",
+                "name": "endpointCount",
+                "type": "uint16"
+              },
+              {
+                "internalType": "bool",
+                "name": "active",
+                "type": "bool"
+              },
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "region",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "operatorInfo",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct IGenesisL1APIRegistry.Instance[]",
+            "name": "instances",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "endpointCounts",
+            "type": "uint16[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint64",
+                "name": "id",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "instanceId",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "addedAt",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "updatedAt",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint32",
+                "name": "epoch",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "adverseDayCount",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "lastAdverseDay",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint8",
+                "name": "kind",
+                "type": "uint8"
+              },
+              {
+                "internalType": "bool",
+                "name": "active",
+                "type": "bool"
+              },
+              {
+                "internalType": "bool",
+                "name": "unreliable",
+                "type": "bool"
+              },
+              {
+                "internalType": "bool",
+                "name": "verified",
+                "type": "bool"
+              },
+              {
+                "internalType": "bytes32",
+                "name": "fingerprint",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "string",
+                "name": "url",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct IGenesisL1APIRegistry.Endpoint[]",
+            "name": "endpoints",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "day",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "epoch",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint16",
+                "name": "reportCount",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "adverseCount",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "healthyCount",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "uptimeBpsAverage",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint32",
+                "name": "latencyP95AverageMs",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "errorBpsAverage",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint64",
+                "name": "lastReportedAt",
+                "type": "uint64"
+              }
+            ],
+            "internalType": "struct IGenesisL1APIRegistry.DayAggregate[]",
+            "name": "aggregates",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "uint16[]",
+            "name": "verifications",
+            "type": "uint16[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nextCursor",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalInstances",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint64",
+            "name": "atRevision",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct GenesisL1RegistryLens.DirectoryPage",
+        "name": "page",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64[]",
+        "name": "ids",
+        "type": "uint64[]"
+      }
+    ],
+    "name": "getEndpointsByIds",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "id",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "instanceId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "addedAt",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "updatedAt",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "epoch",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "adverseDayCount",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lastAdverseDay",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kind",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "unreliable",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "verified",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "fingerprint",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "string",
+            "name": "url",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IGenesisL1APIRegistry.Endpoint[]",
+        "name": "endpoints",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "day",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "epoch",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reportCount",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "adverseCount",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "healthyCount",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "uptimeBpsAverage",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint32",
+            "name": "latencyP95AverageMs",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "errorBpsAverage",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "lastReportedAt",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct IGenesisL1APIRegistry.DayAggregate[]",
+        "name": "aggregates",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSummary",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "revision",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint256",
+            "name": "activeInstances",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "activeEndpoints",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endpointWriteFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16",
+            "name": "reliabilityThresholdBps",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint8",
+            "name": "adverseReportQuorum",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "verificationQuorum",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "authorizedCheckerCount",
+            "type": "uint16"
+          },
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "feeRecipient",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct GenesisL1RegistryLens.Summary",
+        "name": "summary",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "registry",
+    "outputs": [
+      {
+        "internalType": "contract IGenesisL1APIRegistry",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

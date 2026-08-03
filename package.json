@@ -1,0 +1,17 @@
+{
+  "name": "genesisl1-api-registry",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Public register of community-operated GenesisL1 API endpoints, with quorum-attested reliability measurements",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node test/e2e.js",
+    "test:all": "./test/run-all.sh",
+    "fixture": "python3 test/e2e_fixture.py --hold",
+    "check": "node --check web/app.js && node --check web/config.js"
+  },
+  "devDependencies": {
+    "jsdom": "^30.0.1"
+  }
+}

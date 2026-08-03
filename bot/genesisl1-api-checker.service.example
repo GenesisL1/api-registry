@@ -1,0 +1,46 @@
+# /etc/systemd/system/genesisl1-api-checker.service
+[Unit]
+Description=GenesisL1 Public API Checker
+Documentation=https://genesisl1.com
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=genesis-api
+Group=genesis-api
+WorkingDirectory=/opt/genesis-api
+EnvironmentFile=/etc/genesis-api-checker.env
+ExecStart=/opt/genesis-api/.venv/bin/python /opt/genesis-api/bot/checker.py --serve --host 127.0.0.1 --port 8787
+Restart=always
+RestartSec=5
+
+# The checker parses attacker-controlled responses from arbitrary hosts all day.
+# Treat it as untrusted code that happens to hold a key.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources @obsolete
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6
+ReadWritePaths=/opt/genesis-api/bot /opt/genesis-api/web/data
+MemoryMax=1G
+TasksMax=256
+
+[Install]
+WantedBy=multi-user.target

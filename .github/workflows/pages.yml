@@ -1,0 +1,83 @@
+# Publish the directory to GitHub Pages.
+#
+# The site is static and self-contained, so this is just a file copy. It reads
+# web/config.js, so the addresses you commit there are the ones the published
+# page will use. If you keep placeholders in the repository, set the addresses
+# with repository variables instead and let this workflow write them in.
+name: Publish directory
+
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "contract/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  SOLC_VERSION: 0.8.24
+  SOLC_SHA256: fb03a29a517452b9f12bcf459ef37d0a543765bb3bbc911e70a87d6a37c30d5f
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install solc
+        run: |
+          curl -sSL -o /usr/local/bin/solc \
+            "https://github.com/ethereum/solidity/releases/download/v${SOLC_VERSION}/solc-static-linux"
+          echo "${SOLC_SHA256}  /usr/local/bin/solc" | sha256sum -c -
+          chmod +x /usr/local/bin/solc
+
+      - name: Build the ABI bundle
+        run: ./scripts/build.sh
+
+      # Optional: keep deployment addresses out of the repository.
+      # Set REGISTRY_ADDRESS, LENS_ADDRESS and TELEMETRY_URLS as repository
+      # variables (Settings → Secrets and variables → Actions → Variables).
+      - name: Apply deployment addresses
+        if: vars.REGISTRY_ADDRESS != ''
+        run: |
+          python3 - <<'PY'
+          import os, re, pathlib
+          path = pathlib.Path("web/config.js")
+          text = path.read_text()
+          text = re.sub(r'(registryAddress:\s*")[^"]*', r'\g<1>' + os.environ["REGISTRY"], text)
+          text = re.sub(r'(lensAddress:\s*")[^"]*', r'\g<1>' + os.environ["LENS"], text)
+          feeds = os.environ.get("FEEDS", "").strip()
+          if feeds:
+              urls = ", ".join(f'"{u.strip()}"' for u in feeds.split(",") if u.strip())
+              text = re.sub(r'telemetryUrls:\s*\[[^\]]*\]', f'telemetryUrls: [{urls}]', text)
+          path.write_text(text)
+          print(text)
+          PY
+        env:
+          REGISTRY: ${{ vars.REGISTRY_ADDRESS }}
+          LENS: ${{ vars.LENS_ADDRESS }}
+          FEEDS: ${{ vars.TELEMETRY_URLS }}
+
+      - name: Refuse to publish a key
+        run: |
+          if grep -rIn "privateKey\|PRIVATE_KEY" web/ --exclude-dir=vendor; then
+            echo "::error::web/ references a private key. Not publishing."
+            exit 1
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deploy
+        uses: actions/deploy-pages@v4

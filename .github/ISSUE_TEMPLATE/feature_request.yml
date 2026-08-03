@@ -1,0 +1,29 @@
+name: Change proposal
+description: Propose a change to how the register works
+labels: [proposal]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Describe the situation that is bad today, not the solution.
+    validations: { required: true }
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you propose
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where the change lands
+      options: [Contract, Checker, Directory (web), Documentation, More than one]
+
+  - type: textarea
+    id: tradeoff
+    attributes:
+      label: What it costs
+      description: |
+        Gas, trust assumptions, operator burden, or complexity. A proposal that
+        claims no cost usually has an unexamined one.

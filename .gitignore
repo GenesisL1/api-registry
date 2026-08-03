@@ -1,0 +1,24 @@
+# Local tooling
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.solc/
+.DS_Store
+
+# Checker runtime state
+bot/*.sqlite3
+bot/*.sqlite3-wal
+bot/*.sqlite3-shm
+bot/checker.env
+
+# Telemetry snapshots are written at runtime. The committed placeholder lets
+# the directory load before a checker has ever run.
+web/data/status*.json
+web/data/status*.json.sig
+!web/data/status.json
+
+# Test scratch
+test/e2e-manifest.json
+test/_Blocker.sol

@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: "/bot"
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 5
+    labels: [dependencies, checker]
+
+  - package-ecosystem: npm
+    directory: "/"
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 3
+    labels: [dependencies]
+    # ethers is vendored deliberately, not installed. Bumping it is a manual
+    # step: re-vendor the file and update the version in index.html.
+    ignore:
+      - dependency-name: ethers
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule: { interval: monthly }
+    labels: [dependencies, ci]
